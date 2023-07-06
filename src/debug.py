@@ -1,5 +1,6 @@
 from cpu import CPU
 from bus import BUS
+import sys
 
 
 def main():
@@ -13,12 +14,14 @@ def main():
     print("6502 Debugger")
    
     
-    #bus.dump_memory_range(0x8000, 0x8100)
-        
+    bus.dump_memory_at_addr(0x8000)
+    command = "" 
     while 1:
         # print(f"{hex(cpu.address)} {hex(cpu.data)} {bus.r}")
+        clear_last_lines(11)
         bus.dump_memory_at_addr(cpu.pc)
-        inp = input("\033[31m>>>\033[0m ")
+        print()
+        inp = input("\33[2K\r\033[31m>>>\033[0m ")
         if inp: 
             command = inp
         if command in ["h", "help"]:
@@ -47,6 +50,17 @@ def main():
             print("Invalid command")
             print("Type 'h' or 'help' for full list of commands")
                 
+
+def clear_last_lines(num_lines=9):
+    # Move the cursor up `num_lines` times
+    sys.stdout.write('\033[F' * num_lines)
+
+    # Clear each line
+    for _ in range(num_lines):
+        sys.stdout.write('\033[K')  # Clear the line
+
+    # Move the cursor back to the beginning of the first cleared line
+    sys.stdout.write('\r')
 
 def print_help():
     print("h, help: print this help message")
