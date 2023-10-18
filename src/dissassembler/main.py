@@ -25,7 +25,8 @@ for byte in bytes_from_file(filename):
         continue
     print("\033[91m{:02x}\033[0m".format(byte)) 
 
-    op = lookup[byte]
-    inside = op[1]
-    print(op[0], end=" ")
+    # lookup will be a lookup table that contains information needed about op
+#    op = lookup[byte]
+    #inside = op[1]
+    #print(op[0], end=" ")
 
